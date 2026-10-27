@@ -1,0 +1,894 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Una experiencia interactiva sobre Los cuatro acuerdos, de Miguel Ruiz. Proyecto educativo creado con apoyo de inteligencia artificial.">
+    <title>Los cuatro acuerdos | Una guía para vivir mejor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #25251f;
+            --paper: #f7f3e9;
+            --paper-deep: #eee7d8;
+            --coral: #f17862;
+            --blue: #91b8cf;
+            --yellow: #f1cb63;
+            --green: #9bbd9b;
+            --lilac: #c2b0d8;
+            --line: rgba(37, 37, 31, .15);
+            --shadow: 0 18px 45px rgba(49, 44, 33, .10);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: var(--paper);
+            font-family: "DM Sans", sans-serif;
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+            body::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                z-index: 5;
+                opacity: .14;
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.14'/%3E%3C/svg%3E");
+            }
+
+        a {
+            color: inherit;
+        }
+
+        .wrap {
+            width: min(1120px, calc(100% - 40px));
+            margin-inline: auto;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            padding: 22px 0;
+            border-bottom: 1px solid var(--line);
+            font-size: .82rem;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .brand {
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-mark {
+            display: grid;
+            place-items: center;
+            width: 30px;
+            height: 30px;
+            border: 1.5px solid var(--ink);
+            border-radius: 50%;
+            font-family: Georgia, serif;
+            font-size: 1.1rem;
+        }
+
+        .topbar nav {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+            .topbar nav a {
+                text-decoration: none;
+                opacity: .75;
+            }
+
+                .topbar nav a:hover {
+                    opacity: 1;
+                    text-decoration: underline;
+                    text-underline-offset: 5px;
+                }
+
+        .hero {
+            padding: 78px 0 72px;
+            position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            gap: 45px;
+            align-items: center;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            gap: 9px;
+            align-items: center;
+            font-size: .78rem;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+        }
+
+            .eyebrow::before {
+                content: "";
+                width: 27px;
+                height: 2px;
+                background: var(--coral);
+            }
+
+        h1, h2, h3, p {
+            margin-top: 0;
+        }
+
+        h1 {
+            font: 600 clamp(3rem, 6vw, 5.6rem)/.98 "Playfair Display", serif;
+            letter-spacing: -.055em;
+            margin: 20px 0 25px;
+            max-width: 690px;
+        }
+
+            h1 em {
+                color: #b75b48;
+                font-weight: 500;
+            }
+
+        .hero-copy {
+            max-width: 530px;
+            font-size: 1.08rem;
+            color: #5d5a50;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            border: 1.5px solid var(--ink);
+            padding: 12px 18px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: .9rem;
+            transition: transform .2s, background .2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+            .btn:hover {
+                transform: translateY(-3px);
+                background: var(--yellow);
+            }
+
+            .btn.primary {
+                background: var(--ink);
+                color: var(--paper);
+            }
+
+                .btn.primary:hover {
+                    color: var(--ink);
+                }
+
+        .hero-art {
+            min-height: 440px;
+            position: relative;
+            display: grid;
+            place-items: center;
+        }
+
+        .sun {
+            width: min(330px, 72vw);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: var(--yellow);
+            position: absolute;
+            right: 8%;
+            top: 7%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+            .sun::before, .sun::after {
+                content: "";
+                position: absolute;
+                border: 1.5px solid var(--ink);
+                border-radius: 50%;
+                inset: 19px;
+            }
+
+            .sun::after {
+                inset: 39px;
+            }
+
+        .hero-note {
+            position: absolute;
+            z-index: 1;
+            width: 230px;
+            padding: 23px;
+            background: var(--paper);
+            border: 1.5px solid var(--ink);
+            box-shadow: 8px 8px 0 var(--coral);
+            transform: rotate(-7deg);
+            left: 5%;
+            top: 25%;
+        }
+
+            .hero-note .big-quote {
+                font: 700 4rem/.8 "Playfair Display", serif;
+                color: var(--coral);
+            }
+
+            .hero-note p {
+                font: 600 1.28rem/1.25 "Playfair Display", serif;
+                margin: 12px 0;
+            }
+
+        .scribble {
+            position: absolute;
+            right: 4%;
+            bottom: 9%;
+            font-size: 3.4rem;
+            transform: rotate(12deg);
+            z-index: 2;
+        }
+
+        .floating-label {
+            position: absolute;
+            right: 1%;
+            top: 10%;
+            border: 1px solid var(--ink);
+            border-radius: 50%;
+            padding: 15px 12px;
+            width: 98px;
+            height: 98px;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            font-size: .73rem;
+            line-height: 1.2;
+            background: var(--lilac);
+            transform: rotate(10deg);
+            z-index: 2;
+            font-weight: 700;
+        }
+
+        .section {
+            padding: 76px 0;
+        }
+
+        .section-head {
+            max-width: 680px;
+            margin-bottom: 35px;
+        }
+
+        .section-kicker {
+            font-size: .76rem;
+            text-transform: uppercase;
+            letter-spacing: .16em;
+            font-weight: 700;
+            color: #a45d4e;
+        }
+
+        h2 {
+            font: 600 clamp(2.2rem, 4vw, 3.5rem)/1.08 "Playfair Display", serif;
+            letter-spacing: -.035em;
+            margin: 10px 0 15px;
+        }
+
+        .section-head p {
+            color: #625e54;
+            font-size: 1.02rem;
+        }
+
+        .book-panel {
+            background: var(--ink);
+            color: var(--paper);
+            border-radius: 26px;
+            padding: clamp(25px, 5vw, 55px);
+            display: grid;
+            grid-template-columns: .7fr 1.3fr;
+            gap: 40px;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .book-panel::after {
+                content: "✳";
+                position: absolute;
+                right: -20px;
+                top: -75px;
+                font-size: 18rem;
+                color: rgba(241,203,99,.12);
+                transform: rotate(20deg);
+            }
+
+        .book-cover {
+            position: relative;
+            z-index: 1;
+            max-width: 255px;
+            margin: auto;
+            aspect-ratio: .7;
+            width: 100%;
+            background: var(--coral);
+            color: var(--ink);
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 12px 12px 0 var(--yellow);
+            transform: rotate(-3deg);
+            border: 1.5px solid var(--paper);
+        }
+
+            .book-cover .cover-small {
+                text-transform: uppercase;
+                font-size: .68rem;
+                letter-spacing: .12em;
+                font-weight: 700;
+            }
+
+            .book-cover strong {
+                font: 700 clamp(2.1rem, 4vw, 3.3rem)/.92 "Playfair Display", serif;
+                letter-spacing: -.06em;
+            }
+
+            .book-cover .cover-bottom {
+                font-size: .8rem;
+                border-top: 1px solid rgba(37,37,31,.5);
+                padding-top: 12px;
+            }
+
+        .book-text {
+            position: relative;
+            z-index: 1;
+        }
+
+            .book-text h2 {
+                color: var(--yellow);
+            }
+
+            .book-text p {
+                color: #e0ddd3;
+            }
+
+            .book-text .small-note {
+                color: #b9b5a9;
+                font-size: .88rem;
+            }
+
+        .agreement-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 22px;
+        }
+
+        .agreement-card {
+            border: 1.5px solid var(--ink);
+            border-radius: 20px;
+            padding: 24px;
+            background: #fffaf0;
+            box-shadow: 5px 5px 0 var(--line);
+            transition: transform .25s, box-shadow .25s;
+        }
+
+            .agreement-card:hover {
+                transform: translateY(-5px) rotate(-.3deg);
+                box-shadow: 9px 10px 0 var(--line);
+            }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .number {
+            font-size: .75rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        .agreement-card h3 {
+            font: 600 clamp(1.45rem, 2.4vw, 2rem)/1.12 "Playfair Display", serif;
+            margin: 9px 0 14px;
+            max-width: 380px;
+        }
+
+        .agreement-card > p {
+            color: #625e54;
+        }
+
+        .sticker-stage {
+            display: grid;
+            place-items: center;
+            min-height: 210px;
+            margin: 4px 0 18px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .sticker {
+            width: 170px;
+            height: 170px;
+            position: relative;
+            display: grid;
+            place-items: center;
+            filter: drop-shadow(5px 7px 0 rgba(37,37,31,.12));
+            transition: transform .3s;
+        }
+
+        .agreement-card:hover .sticker {
+            transform: rotate(5deg) scale(1.06);
+        }
+
+        .sticker svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .why {
+            background: var(--paper-deep);
+            padding: 17px 18px;
+            border-left: 4px solid var(--coral);
+            border-radius: 0 10px 10px 0;
+            font-size: .92rem;
+        }
+
+            .why strong {
+                display: block;
+                font-size: .78rem;
+                text-transform: uppercase;
+                letter-spacing: .08em;
+                margin-bottom: 4px;
+            }
+
+        .card-yellow .sticker-stage {
+            background: #f8e9ad;
+        }
+
+        .card-blue .sticker-stage {
+            background: #dceaf0;
+        }
+
+        .card-green .sticker-stage {
+            background: #e0eadc;
+        }
+
+        .card-lilac .sticker-stage {
+            background: #e9e1f0;
+        }
+
+        .card-yellow .why {
+            border-color: #d6a72e;
+        }
+
+        .card-blue .why {
+            border-color: #6d9db8;
+        }
+
+        .card-green .why {
+            border-color: #709b70;
+        }
+
+        .card-lilac .why {
+            border-color: #a48bbd;
+        }
+
+        .reflection {
+            background: var(--blue);
+            border: 1.5px solid var(--ink);
+            border-radius: 24px;
+            padding: clamp(25px, 5vw, 48px);
+            display: grid;
+            grid-template-columns: 1fr .7fr;
+            gap: 25px;
+            align-items: center;
+        }
+
+            .reflection h2 {
+                margin-top: 0;
+            }
+
+            .reflection p {
+                max-width: 650px;
+            }
+
+        .reflection-art {
+            font-size: 7rem;
+            text-align: center;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .question-box {
+            border: 1.5px dashed var(--ink);
+            border-radius: 15px;
+            padding: 20px;
+            background: rgba(255,255,255,.35);
+        }
+
+            .question-box label {
+                display: block;
+                font-weight: 700;
+                margin-bottom: 10px;
+            }
+
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            resize: vertical;
+            font: inherit;
+            padding: 12px;
+            background: rgba(255,255,255,.65);
+            border: 1px solid rgba(37,37,31,.35);
+            border-radius: 10px;
+            color: var(--ink);
+        }
+
+        .reflection button {
+            margin-top: 10px;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 700;
+            background: var(--ink);
+            color: var(--paper);
+            border: 0;
+            border-radius: 999px;
+            padding: 11px 16px;
+        }
+
+        .saved-message {
+            min-height: 1.5em;
+            margin: 10px 0 0;
+            font-size: .9rem;
+            font-weight: 600;
+        }
+
+        .footer {
+            padding: 35px 0 45px;
+            border-top: 1px solid var(--line);
+            margin-top: 70px;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+
+        .footer p {
+            color: #6a665c;
+            font-size: .85rem;
+            margin: 4px 0;
+        }
+
+        .ai-stamp {
+            display: inline-block;
+            border: 1px solid var(--ink);
+            padding: 8px 11px;
+            border-radius: 5px;
+            font-size: .73rem;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            transform: rotate(2deg);
+            background: var(--yellow);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity .65s ease, transform .65s ease;
+        }
+
+            .reveal.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        @keyframes float {
+            0%,100% {
+                transform: translateY(0) rotate(-2deg);
+            }
+
+            50% {
+                transform: translateY(-13px) rotate(2deg);
+            }
+        }
+
+        @media (max-width: 760px) {
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .hero {
+                padding: 52px 0 35px;
+            }
+
+            .hero-grid, .book-panel, .reflection {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-art {
+                min-height: 340px;
+                margin-top: 5px;
+            }
+
+            .sun {
+                width: 260px;
+                right: 8%;
+            }
+
+            .hero-note {
+                width: 195px;
+                left: 2%;
+                top: 23%;
+            }
+
+            .floating-label {
+                right: 0;
+                top: 3%;
+            }
+
+            .scribble {
+                bottom: 2%;
+                right: 4%;
+            }
+
+            .agreement-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .book-cover {
+                max-width: 210px;
+            }
+
+            .reflection-art {
+                font-size: 4.5rem;
+            }
+
+            .section {
+                padding: 55px 0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="wrap topbar">
+        <a class="brand" href="#inicio" style="text-decoration:none"><span class="brand-mark">4</span> Pequeños acuerdos, grandes cambios</a>
+        <nav aria-label="Navegación principal">
+            <a href="#libro">El libro</a>
+            <a href="#acuerdos">Los acuerdos</a>
+            <a href="#reflexion">Reflexiona</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero wrap" id="inicio">
+            <div class="hero-grid">
+                <div class="reveal">
+                    <span class="eyebrow">Una guía para vivir con más libertad</span>
+                    <h1>Tu mundo cambia cuando cambias <em>tus acuerdos.</em></h1>
+                    <p class="hero-copy">Una exploración visual de <strong>Los cuatro acuerdos</strong>, el libro de Miguel Ruiz que invita a revisar las ideas, palabras y hábitos con los que construimos nuestra vida.</p>
+                    <div class="hero-actions">
+                        <a class="btn primary" href="#acuerdos">Descubrir los acuerdos <span aria-hidden="true">↓</span></a>
+                        <a class="btn" href="#libro">Conocer el libro</a>
+                    </div>
+                </div>
+                <div class="hero-art reveal" aria-label="Ilustración decorativa de una estrella y una nota">
+                    <div class="sun"></div>
+                    <div class="hero-note">
+                        <div class="big-quote">“</div>
+                        <p>La manera en que te hablas también construye tu mundo.</p>
+                        <span class="cover-small">Una idea para recordar</span>
+                    </div>
+                    <div class="floating-label">MENOS<br>JUICIO<br>✳ MÁS<br>CONCIENCIA</div>
+                    <div class="scribble" aria-hidden="true">✳</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section wrap" id="libro">
+            <div class="book-panel reveal">
+                <div class="book-cover" aria-label="Diseño original inspirado en la portada de un libro">
+                    <span class="cover-small">Una guía de sabiduría práctica</span>
+                    <strong>Los<br>cuatro<br>acuerdos</strong>
+                    <div class="cover-bottom">Basado en las enseñanzas de Miguel Ruiz</div>
+                </div>
+                <div class="book-text">
+                    <span class="section-kicker" style="color:var(--yellow)">Antes de empezar</span>
+                    <h2>¿De qué trata el libro?</h2>
+                    <p>En <em>Los cuatro acuerdos</em>, el autor mexicano <strong>Miguel Ruiz</strong> presenta cuatro principios inspirados en la tradición tolteca. Propone que muchas veces sufrimos por creencias aprendidas, interpretaciones y palabras que aceptamos como verdades sobre nosotros mismos.</p>
+                    <p>El libro invita a observar esos hábitos y reemplazarlos por acuerdos más conscientes: hablar con integridad, no convertir todo en algo personal, evitar suposiciones y hacer lo mejor posible según nuestras circunstancias.</p>
+                    <p class="small-note">No se trata de ser perfecto ni de controlar todo lo que pasa, sino de practicar una forma más consciente de relacionarnos con nosotros mismos y con los demás.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section wrap" id="acuerdos">
+            <div class="section-head reveal">
+                <span class="section-kicker">La colección de stickers</span>
+                <h2>Cuatro acuerdos.<br>Cuatro recordatorios visuales.</h2>
+                <p>Cada sticker representa una idea central del libro. Lee el significado y descubre por qué elegí ese símbolo para recordarlo.</p>
+            </div>
+
+            <div class="agreement-grid">
+                <article class="agreement-card card-yellow reveal">
+                    <div class="card-top"><span class="number">Acuerdo 01 / Palabras</span><span aria-hidden="true">✳</span></div>
+                    <h3>Sé impecable con tus palabras</h3>
+                    <div class="sticker-stage">
+                        <div class="sticker" role="img" aria-label="Sticker de una burbuja de diálogo con una estrella">
+                            <svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M28 34 Q24 19 43 18 L139 18 Q158 18 158 38 L158 103 Q158 122 139 122 L83 122 L54 151 L56 122 L43 122 Q27 122 27 104 Z" fill="#fff9df" stroke="#25251f" stroke-width="4" stroke-linejoin="round" />
+                                <path d="M91 40 L100 59 L121 62 L106 77 L110 98 L91 88 L72 98 L76 77 L61 62 L82 59 Z" fill="#f17862" stroke="#25251f" stroke-width="3" stroke-linejoin="round" />
+                                <path d="M38 139 l8 -7 M139 142 l8 7 M142 22 l7 -8" stroke="#25251f" stroke-width="4" stroke-linecap="round" />
+                                <circle cx="47" cy="48" r="3" fill="#25251f" />
+                                <circle cx="135" cy="94" r="3" fill="#25251f" />
+                            </svg>
+                        </div>
+                    </div>
+                    <p>Usa las palabras con verdad, cuidado y responsabilidad. Evita usarlas para herir, humillar o alimentar chismes; también importa cómo te hablas a ti mismo.</p>
+                    <div class="why"><strong>¿Por qué este sticker?</strong>La burbuja representa lo que decimos y la estrella simboliza que las palabras pueden iluminar o lastimar. La idea es recordar que hablar con respeto y honestidad tiene un impacto real.</div>
+                </article>
+
+                <article class="agreement-card card-blue reveal">
+                    <div class="card-top"><span class="number">Acuerdo 02 / Perspectiva</span><span aria-hidden="true">☁</span></div>
+                    <h3>No te tomes nada personalmente</h3>
+                    <div class="sticker-stage">
+                        <div class="sticker" role="img" aria-label="Sticker de una nube con un escudo y un corazón">
+                            <svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M42 91 C20 91 19 60 42 55 C43 31 77 24 91 46 C111 28 142 44 139 67 C163 74 159 102 137 105 L43 105 Z" fill="#fff" stroke="#25251f" stroke-width="4" stroke-linejoin="round" />
+                                <path d="M90 72 L123 84 L119 116 Q111 137 90 150 Q69 137 61 116 L57 84 Z" fill="#91b8cf" stroke="#25251f" stroke-width="4" stroke-linejoin="round" />
+                                <path d="M90 119 C83 112 72 105 76 97 C80 89 88 95 90 100 C94 92 104 90 108 98 C112 106 98 115 90 119 Z" fill="#f17862" stroke="#25251f" stroke-width="2.5" />
+                                <path d="M31 125 l-8 5 M143 125 l8 5 M90 24 v-8" stroke="#25251f" stroke-width="4" stroke-linecap="round" />
+                            </svg>
+                        </div>
+                    </div>
+                    <p>Lo que otras personas dicen o hacen suele reflejar su propia historia, emociones y creencias. Escucha y aprende, pero no conviertas automáticamente sus opiniones en una medida de tu valor.</p>
+                    <div class="why"><strong>¿Por qué este sticker?</strong>La nube simboliza las opiniones que van y vienen; el escudo y el corazón representan el cuidado de la propia autoestima. No significa ignorar toda crítica, sino evaluarla sin creer que todo es un ataque personal.</div>
+                </article>
+
+                <article class="agreement-card card-green reveal">
+                    <div class="card-top"><span class="number">Acuerdo 03 / Claridad</span><span aria-hidden="true">?</span></div>
+                    <h3>No hagas suposiciones</h3>
+                    <div class="sticker-stage">
+                        <div class="sticker" role="img" aria-label="Sticker de una lupa que descubre una pequeña estrella">
+                            <svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="75" cy="70" r="47" fill="#f8fff2" stroke="#25251f" stroke-width="4" />
+                                <circle cx="75" cy="70" r="33" fill="#c9dfc5" stroke="#25251f" stroke-width="2.5" stroke-dasharray="4 5" />
+                                <path d="M108 104 L147 144 Q155 153 146 160 Q139 165 132 157 L93 117 Z" fill="#f1cb63" stroke="#25251f" stroke-width="4" stroke-linejoin="round" />
+                                <path d="M75 48 L81 62 L97 64 L85 75 L88 91 L75 83 L61 91 L64 75 L52 64 L68 62 Z" fill="#f17862" stroke="#25251f" stroke-width="2.5" stroke-linejoin="round" />
+                                <path d="M34 30 l-8 -8 M117 42 l9 -6 M35 107 l-9 6" stroke="#25251f" stroke-width="4" stroke-linecap="round" />
+                            </svg>
+                        </div>
+                    </div>
+                    <p>No des por hecho que sabes lo que otra persona piensa o quiere. Pregunta, expresa tus necesidades con claridad y comprueba la información antes de sacar conclusiones.</p>
+                    <div class="why"><strong>¿Por qué este sticker?</strong>La lupa representa la curiosidad y la búsqueda de claridad; la estrella es lo que aparece cuando investigamos en vez de inventar respuestas. Preguntar puede evitar malentendidos innecesarios.</div>
+                </article>
+
+                <article class="agreement-card card-lilac reveal">
+                    <div class="card-top"><span class="number">Acuerdo 04 / Esfuerzo</span><span aria-hidden="true">♡</span></div>
+                    <h3>Haz siempre lo máximo que puedas</h3>
+                    <div class="sticker-stage">
+                        <div class="sticker" role="img" aria-label="Sticker de una planta creciendo hacia el sol">
+                            <svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="129" cy="43" r="22" fill="#f1cb63" stroke="#25251f" stroke-width="3.5" />
+                                <path d="M129 10 v-7 M129 76 v-7 M96 43 h-7 M169 43 h-7 M106 20 l-6 -6 M152 66 l-6 -6 M152 20 l6 -6 M106 66 l-6 6" stroke="#25251f" stroke-width="3.5" stroke-linecap="round" />
+                                <path d="M90 151 C85 126 91 101 110 81" fill="none" stroke="#25251f" stroke-width="5" stroke-linecap="round" />
+                                <path d="M98 112 C66 114 56 94 60 78 C81 78 99 91 98 112 Z" fill="#9bbd9b" stroke="#25251f" stroke-width="3.5" stroke-linejoin="round" />
+                                <path d="M103 96 C104 70 123 61 142 67 C139 87 123 101 103 96 Z" fill="#b9d7b4" stroke="#25251f" stroke-width="3.5" stroke-linejoin="round" />
+                                <path d="M60 151 Q90 143 120 151 L113 168 L67 168 Z" fill="#c2b0d8" stroke="#25251f" stroke-width="3.5" stroke-linejoin="round" />
+                                <path d="M25 52 l7 7 M28 80 l-9 1 M43 32 l-2 -9" stroke="#25251f" stroke-width="3.5" stroke-linecap="round" />
+                            </svg>
+                        </div>
+                    </div>
+                    <p>Haz tu mejor esfuerzo posible en cada momento, recordando que tu energía y tus circunstancias cambian. Dar lo máximo no significa exigirte hasta agotarte ni ser perfecto.</p>
+                    <div class="why"><strong>¿Por qué este sticker?</strong>La planta crece poco a poco y se orienta hacia la luz. Representa el progreso constante: cuidarte, aprender de los errores y dar lo mejor que puedas hoy, sin compararte con el ritmo de los demás.</div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section wrap" id="reflexion">
+            <div class="reflection reveal">
+                <div>
+                    <span class="section-kicker" style="color:#25251f">Llévalo a tu vida</span>
+                    <h2>¿Cuál acuerdo necesitas practicar más?</h2>
+                    <p>Piensa en una situación cotidiana: una conversación, un malentendido, una crítica o una meta personal. Elige un acuerdo y escribe una acción pequeña que puedas intentar.</p>
+                    <div class="question-box">
+                        <label for="reflectionText">Mi compromiso de esta semana</label>
+                        <textarea id="reflectionText" placeholder="Esta semana voy a practicar..."></textarea>
+                        <button type="button" id="saveReflection">Guardar mi reflexión en esta página</button>
+                        <p class="saved-message" id="savedMessage" aria-live="polite"></p>
+                    </div>
+                </div>
+                <div class="reflection-art" aria-hidden="true">🌱</div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="wrap footer">
+        <div class="footer-inner">
+            <div>
+                <div class="brand"><span class="brand-mark">4</span> Pequeños acuerdos, grandes cambios</div>
+                <p>Proyecto educativo · Institución Educativa Técnica Comercial Teófilo Roberto Potes</p>
+                <p>Estudiante: Carlos Hernández · Curso: 11-8 · Docente: Elizabeth Chalá</p>
+            </div>
+            <div>
+                <span class="ai-stamp">Creado con apoyo de IA ✳</span>
+                <p style="max-width:310px;margin-top:12px">Contenido organizado con apoyo de inteligencia artificial para fines educativos. Los stickers son ilustraciones originales creadas en SVG para esta página.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // Animación de entrada al desplazarse por la página.
+    const revealItems = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      revealItems.forEach(item => observer.observe(item));
+    } else {
+      revealItems.forEach(item => item.classList.add('visible'));
+    }
+
+    // La reflexión se mantiene solo mientras esta página siga abierta.
+    const reflectionText = document.getElementById('reflectionText');
+    const saveButton = document.getElementById('saveReflection');
+    const savedMessage = document.getElementById('savedMessage');
+    saveButton.addEventListener('click', () => {
+      if (!reflectionText.value.trim()) {
+        savedMessage.textContent = 'Escribe una idea antes de guardarla. ✍️';
+        reflectionText.focus();
+        return;
+      }
+      savedMessage.textContent = '¡Reflexión guardada en esta página! Recuerda ponerla en práctica. ✨';
+    });
+    </script>
+</body>
+</html>
